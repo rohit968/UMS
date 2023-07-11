@@ -1,15 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  getUserDetail,
+  getUserId,
+  getUserName,
+  getUserEmail,
+  getUserPhone,
+} from "../../Redux/Redux/Actions/userAction";
 
 const EditUser = () => {
   const [user, setUser] = useState([]);
   const { id } = useParams();
 
-  const [userid, setUserId] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const { userid, name, email, phone } = useSelector((state) => state.user);
 
   const [errors, setErrors] = useState({
     userid: "",
@@ -22,10 +27,10 @@ const EditUser = () => {
 
   useEffect(() => {
     if (user) {
-      setUserId(user.userid);
-      setName(user.name);
-      setEmail(user.email);
-      setPhone(user.phone);
+      getUserId(user.userid);
+      getUserName(user.name);
+      getUserEmail(user.email);
+      getUserPhone(user.phone);
     }
   }, [user]);
 
@@ -77,10 +82,10 @@ const EditUser = () => {
           setTimeout(() => {
             navigate("/");
           }, 4000);
-          setUserId("");
-          setName("");
-          setEmail("");
-          setPhone("");
+          getUserId("");
+          getUserName("");
+          getUserEmail("");
+          getUserPhone("");
         });
     } catch (err) {
       console.log(err);
@@ -122,7 +127,7 @@ const EditUser = () => {
             value={user ? userid : ""}
             className="w-full  bg-slate-500 rounded-sm py-1 px-2 text-white focus:outline-none"
             onChange={(e) => {
-              setUserId(e.target.value);
+              getUserId(e.target.value);
               setErrors({ ...errors, id: "", main: "" });
             }}
           />
@@ -139,7 +144,7 @@ const EditUser = () => {
             value={user ? name : ""}
             className="w-full  bg-slate-500 rounded-sm py-1 px-2 text-white focus:outline-none"
             onChange={(e) => {
-              setName(e.target.value);
+              getUserName(e.target.value);
               setErrors({ ...errors, name: "", main: "" });
             }}
           />
@@ -156,7 +161,7 @@ const EditUser = () => {
             value={user ? email : ""}
             className="w-full  bg-slate-500 rounded-sm py-1 px-2 text-white focus:outline-none"
             onChange={(e) => {
-              setEmail(e.target.value);
+              getUserEmail(e.target.value);
               setErrors({ ...errors, email: "", main: "" });
             }}
           />
@@ -173,7 +178,7 @@ const EditUser = () => {
             value={user ? phone : ""}
             className="w-full  bg-slate-500 rounded-sm py-1 px-2 text-white focus:outline-none"
             onChange={(e) => {
-              setPhone(e.target.value);
+              getUserPhone(e.target.value);
               setErrors({ ...errors, phone: "", main: "" });
             }}
           />

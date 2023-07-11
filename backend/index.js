@@ -29,6 +29,7 @@ app.post("/adduser", async (req, res) => {
     const createdUser = await Users.create({ userid, name, email, phone });
     res.status(201).json(createdUser);
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: "User cannot be created" });
   }
 });

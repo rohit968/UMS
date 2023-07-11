@@ -1,12 +1,16 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  getUserId,
+  getUserName,
+  getUserEmail,
+  getUserPhone,
+} from "../../Redux/Redux/Actions/userAction";
+import { useSelector } from "react-redux";
 
 const AddUser = () => {
-  const [userid, setUserId] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const { userid, name, email, phone } = useSelector((state) => state.user);
 
   const [errors, setErrors] = useState({
     userid: "",
@@ -51,10 +55,10 @@ const AddUser = () => {
           setTimeout(() => {
             navigate("/");
           }, 4000);
-          setUserId("");
-          setName("");
-          setEmail("");
-          setPhone("");
+          getUserId("");
+          getUserName("");
+          getUserEmail("");
+          getUserPhone("");
         });
     } catch (err) {
       console.log(err);
@@ -96,7 +100,7 @@ const AddUser = () => {
             value={userid}
             className="w-full  bg-slate-500 rounded-sm py-1 px-2 text-white focus:outline-none"
             onChange={(e) => {
-              setUserId(e.target.value);
+              getUserId(e.target.value);
               setErrors({ ...errors, id: "", main: "" });
             }}
           />
@@ -113,7 +117,7 @@ const AddUser = () => {
             value={name}
             className="w-full  bg-slate-500 rounded-sm py-1 px-2 text-white focus:outline-none"
             onChange={(e) => {
-              setName(e.target.value);
+              getUserName(e.target.value);
               setErrors({ ...errors, name: "", main: "" });
             }}
           />
@@ -130,7 +134,7 @@ const AddUser = () => {
             value={email}
             className="w-full  bg-slate-500 rounded-sm py-1 px-2 text-white focus:outline-none"
             onChange={(e) => {
-              setEmail(e.target.value);
+              getUserEmail(e.target.value);
               setErrors({ ...errors, email: "", main: "" });
             }}
           />
@@ -147,7 +151,7 @@ const AddUser = () => {
             value={phone}
             className="w-full  bg-slate-500 rounded-sm py-1 px-2 text-white focus:outline-none"
             onChange={(e) => {
-              setPhone(e.target.value);
+              getUserPhone(e.target.value);
               setErrors({ ...errors, phone: "", main: "" });
             }}
           />

@@ -2,20 +2,22 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { getAllUsers } from "../Redux/Redux/Actions/userAction";
+import { useSelector } from "react-redux";
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const [updation, setUpdation] = useState(false);
   const navigate = useNavigate();
+  const { users } = useSelector((state) => state.user);
 
   useEffect(() => {
     const result = async () => {
       try {
         const response = await axios.get("/users");
-        setUsers(response.data);
+        getAllUsers(response?.data);
       } catch (error) {
-        setError(error.response.data.error);
+        setError(error.response?.data.error);
       }
     };
     result();
