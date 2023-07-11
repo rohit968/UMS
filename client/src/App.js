@@ -6,7 +6,8 @@ import axios from 'axios'
 import ViewPage from './pages/ViewPage'
 
 const App = () => {
-  axios.defaults.baseURL = "http://localhost:4001";
+  //axios.defaults.baseURL = "http://localhost:4001";
+  axios.defaults.baseURL = "https://ums-backend-qmo7.onrender.com"
   return (
     <div>
       <Routes>
