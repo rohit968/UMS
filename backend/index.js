@@ -3,6 +3,8 @@ const app = express();
 const mongoose = require('mongoose')
 const dotenv = require('dotenv');
 const cors = require('cors');
+const multer = require('multer');
+const path = require('path');
 
 const Users = require('./models/Users');
 
@@ -19,14 +21,27 @@ mongoose.connect(process.env.DATABASE_CONNECTION_URL, {
   useUnifiedTopology: true
 });
 
-app.post("/adduser", async (req, res) => {
+//Uploading profile picture
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, 'public/uploads/');
+  },
+  filename: function (req, file, callback) {
+    callback(null, Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage: storage });
+
+
+app.post("/adduser", upload.single('filename'), async (req, res) => {
   const { userid, name, email, phone } = req.body;
+  const { filename } = req.file;
   try {
     const existingUser = await Users.findOne({ userid });
     if (existingUser) {
       return res.status(409).json({ message: 'User already exists' });
     }
-    const createdUser = await Users.create({ userid, name, email, phone });
+    const createdUser = await Users.create({ userid, name, profilePicture: filename, email, phone });
     res.status(201).json(createdUser);
   } catch (err) {
     console.log(err)

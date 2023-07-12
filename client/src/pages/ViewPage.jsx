@@ -8,6 +8,11 @@ const ViewPage = () => {
   const { user } = useSelector((state) => state.user);
   const { id } = useParams();
 
+  console.log(user);
+
+  const image = `http://localhost:4001/uploads/${user?.profilePicture}`;
+  console.log(image);
+
   useEffect(() => {
     axios.get(`/user/${id}`).then((res) => {
       getUserDetail(res.data);
@@ -22,6 +27,7 @@ const ViewPage = () => {
           <tr>
             <th className="border-r border-black p-1 md:p-4">User ID</th>
             <th className="border-r border-black p-1 md:p-4">Name</th>
+            <th className="border-r border-black p-1 md:p-4">Photo</th>
             <th className="border-r border-black p-1 md:p-4">Email</th>
             <th className="p-1 md:p-4">Contact Number</th>
           </tr>
@@ -30,6 +36,13 @@ const ViewPage = () => {
           <tr>
             <td className="border-r border-black p-1 md:p-4">{user?.userid}</td>
             <td className="border-r border-black p-1 md:p-4">{user?.name}</td>
+            <td className="border-r border-black p-1 md:p-4">
+              <img
+                src={image}
+                alt="Profile"
+                className="h-full w-full object-cover"
+              />
+            </td>
             <td className="border-r border-black p-1 md:p-4">{user?.email}</td>
             <td className="p-1 md:p-4">{user?.phone}</td>
           </tr>

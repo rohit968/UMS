@@ -2,6 +2,7 @@ const initialState = {
   users: [],
   userid: '',
   name: '',
+  profilePicture: null,
   email: '',
   phone: ''
 };
@@ -22,6 +23,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         name: action.payload,
+      };
+    case 'GET_USER_PROFILE_PICTURE':
+      return {
+        ...state,
+        profilePicture: action.payload,
       };
     case 'GET_USER_EMAIL':
       return {

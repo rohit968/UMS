@@ -21,6 +21,13 @@ export const getUserName = (data) => {
   })
 };
 
+export const getUserProfilePicture = (data) => {
+  store.dispatch({
+    type: "GET_USER_PROFILE_PICTURE",
+    payload: data,
+  })
+};
+
 export const getUserEmail = (data) => {
   store.dispatch({
     type: "GET_USER_EMAIL",
